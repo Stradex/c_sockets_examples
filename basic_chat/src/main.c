@@ -19,7 +19,7 @@
 * ./chat join hostname [port=10666]
 */
 void invalid_args() {
-  fprintf(stderr, "usage:\n./chat host [port=10666]\n./chat join hostname [port=10666]\n");
+  fprintf(stderr, "usage:\n./chat host [port=10666]\n./chat join hostname nickname [port=10666]\n");
 }
 int main(int argc, char* argv[]) {
   if (argc < 2) {
@@ -29,11 +29,11 @@ int main(int argc, char* argv[]) {
   if (strcmp(argv[1], "host") == 0) {
     start_server(argc >= 3 ? atoi(argv[2]) : DEFAULT_PORT);
   } else if (strcmp(argv[1], "join") == 0) {
-    if (argc < 3) { 
+    if (argc < 4) { 
       invalid_args();
       return 1;
     }
-    start_client(argv[2], argc >= 4 ? atoi(argv[3]) : DEFAULT_PORT);
+    start_client(argv[2], argv[3], argc >= 5 ? atoi(argv[4]) : DEFAULT_PORT);
   }
 }
 

@@ -135,6 +135,7 @@ void start_server(int port) {
           }
         } else {
           //If not the listener, we're just a regular client.
+          memset(buf, 0, sizeof(buf));
           int nbytes = recv(pfds[i].fd, buf, sizeof buf, 0);
           int sender_fd = pfds[i].fd;
           
@@ -151,7 +152,7 @@ void start_server(int port) {
             del_from_pdfs(&pfds, i, &fd_count);
           } else {
             //We got some data from a client
-            
+            printf("client: %s\n", buf);
             for (int j=0; j < fd_count; j++) {
               // Send to everyone
               int dest_fd = pfds[j].fd;
@@ -161,6 +162,7 @@ void start_server(int port) {
               if (send(dest_fd, buf, nbytes, 0) == -1) {
                 perror("send");
               }
+
             }
           }
         }
