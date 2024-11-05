@@ -27,10 +27,17 @@ int main(int argc, char* argv[]) {
       return 1;
     }
     char message[256] = "";
+    if (argc < 5) {
+      strcpy(message, "Hello");
+    }
     for (int i=4; i < argc; i++) {
-      char buffer[256] = "";
-      strcpy(buffer, message);
-      sprintf(message, "%s %s", buffer, argv[i]);
+      if (i > 4) {
+        char buffer[128] = "";
+        strcpy(buffer, message);
+        sprintf(message, "%s %s", buffer, argv[i]);
+      } else {
+        sprintf(message, "%s", argv[i]);
+      }
     }
     start_talker(argv[2], argc >= 4 ? atoi(argv[3]) : DEFAULT_PORT, (const char*)message);
   }
